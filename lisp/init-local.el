@@ -70,6 +70,12 @@
   (comment-or-uncomment-region (line-beginning-position) (line-end-position)))
 (global-set-key (kbd "C-;") 'toggle-comment-on-line)
 
+
+;; org mode
+(require-package 'org-bullets)
+(add-hook 'org-mode-hook 'org-bullets-mode)
+(setq org-bullets-bullet-list '("•"))
+
 ;;; Themes
 ;;(require-package 'doom-themes)
 ;;(load-theme 'doom-tomorrow-night t)
