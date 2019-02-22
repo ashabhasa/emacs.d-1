@@ -76,6 +76,15 @@
 (add-hook 'org-mode-hook 'org-bullets-mode)
 (setq org-bullets-bullet-list '("•"))
 
+(require-package 'easy-kill)
+(cua-mode -1)
+;; Use easy-kill in place of kill-ring-save
+(global-set-key [remap kill-ring-save] 'easy-kill)
+(global-set-key [remap whole-line-or-region-kill-ring-save] 'easy-kill)
+
+;; Use easy-mark in place of mark-sexp
+(global-set-key [remap mark-sexp] 'easy-mark)
+
 ;;; Themes
 ;;(require-package 'doom-themes)
 ;;(load-theme 'doom-tomorrow-night t)
