@@ -145,9 +145,13 @@
 ;; optional key bindings, easier than hs defaults
 (define-key nxml-mode-map (kbd "C-c h") 'hs-toggle-hiding)
 
+
 ;; end of xml configuration
 
-
+;; Enable silver searcher for fast search
+(require-package 'ag)
+;; (require ag)
+;; end silver searcher configuration
 
 ;;; Themes
 ;;(require-package 'doom-themes)
