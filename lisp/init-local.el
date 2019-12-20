@@ -148,17 +148,21 @@
 
 ;; end of xml configuration
 
+(defun join-lines (n)
+  "Join N lines."
+  (interactive "p")
+  (if (use-region-p)
+      (let ((fill-column (point-max)))
+        (fill-region (region-beginning) (region-end)))
+    (dotimes (_ (abs n))
+      (delete-indentation (natnump n)))))
+
+(global-set-key (kbd "C-^") 'join-lines)
+
+
+
 ;; Enable silver searcher for fast search
 (require-package 'ag)
-;; (require ag)
-;; end silver searcher configuration
-
-;;; Themes
-;;(require-package 'doom-themes)
-;;(load-theme 'doom-tomorrow-night t)
-;; Corrects (and improves) org-mode's native fontification.
-;;(doom-themes-org-config)
-
 
 
 ;;; init-local ends here
