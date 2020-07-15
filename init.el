@@ -138,6 +138,8 @@
 (require-package 'lua-mode)
 (require-package 'htmlize)
 (require-package 'dsvn)
+(require-package 'company-coq)
+
 (when *is-a-mac*
   (require-package 'osx-location))
 (unless (eq system-type 'windows-nt)
