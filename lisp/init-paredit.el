@@ -20,6 +20,14 @@
 
 
 ;; Compatibility with other modes
+(defun sanityinc/suspend-mode-during-cua-rect-selection (mode-name)
+  "Add an advice to suspend `MODE-NAME' while selecting a CUA rectangle."
+  (eval-after-load 'cua-rect
+    (advice-add 'cua--activate-rectangle :after
+                (lambda (&rest _)
+                  (when (bound-and-true-p mode-name)
+                    (push mode-name sanityinc/suspended-modes-during-cua-rect)
+                    (funcall mode-name 0))))))
 
 (sanityinc/suspend-mode-during-cua-rect-selection 'paredit-mode)
 

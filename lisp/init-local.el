@@ -27,7 +27,7 @@
       scroll-step 1
       scroll-conservatively 10000
       scroll-preserve-screen-position 1)
-(provide 'init-local)
+
 
 ;;; Make Emacs look in Stack/Cabal directory for binaries
 (let ((my-local-path (expand-file-name "~/.local/bin")))
@@ -211,6 +211,8 @@
   )
 ;;
 
+;; bind super to option key
+(setq mac-option-modifier 'super)
 
-
+(provide 'init-local)
 ;;; init-local ends here
