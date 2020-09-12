@@ -4,26 +4,41 @@
 
 (require-package 'haskell-mode)
 
-
 ;; Use intero for completion and flycheck
 
-(when (maybe-require-package 'intero)
-  (after-load 'haskell-mode
-    (intero-global-mode)
-    (add-hook 'haskell-mode-hook 'subword-mode)
-    (add-hook 'haskell-mode-hook 'eldoc-mode))
-  (after-load 'haskell-cabal
-    (add-hook 'haskell-cabal-mode 'subword-mode)
-    (define-key haskell-cabal-mode-map (kbd "C-c C-l") 'intero-restart))
-  (after-load 'intero
-    ;; Don't clobber sanityinc/counsel-search-project binding
-    (define-key intero-mode-map (kbd "M-?") nil)
-    (after-load 'flycheck
-      (flycheck-add-next-checker 'intero
-                                 '(warning . haskell-hlint)))))
+;; (when (maybe-require-package 'intero)
+;;   (after-load 'haskell-mode
+;;     (intero-global-mode)
+;;     (add-hook 'haskell-mode-hook 'subword-mode)
+;;     (add-hook 'haskell-mode-hook 'eldoc-mode))
+;;   (after-load 'haskell-cabal
+;;     (add-hook 'haskell-cabal-mode 'subword-mode)
+;;     (define-key haskell-cabal-mode-map (kbd "C-c C-l") 'intero-restart))
+;;   (after-load 'intero
+;;     ;; Don't clobber sanityinc/counsel-search-project binding
+;;     (define-key intero-mode-map (kbd "M-?") nil)
+;;     (after-load 'flycheck
+;;       (flycheck-add-next-checker 'intero
+;;                                  '(warning . haskell-hlint)))))
 
-
-(add-auto-mode 'haskell-mode "\\.ghci\\'")
+(require-package 'lsp-mode)
+(require-package 'lsp-haskell)
+(require-package 'lsp-ui)
+(when (require 'lsp)
+  (when (require 'lsp-haskell)
+    (when (require 'lsp-ui)
+      (add-hook 'haskell-mode-hook #'lsp)
+      (setq lsp-haskell-process-path-hie "hie-wrapper")
+      (setq lsp-auto-configure 't)
+      (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+      (add-hook 'haskell-mode-hook 'flycheck-mode)
+      (setq lsp-ui-sideline-enable nil)
+      (setq lsp-ui-doc-enable nil)
+      (setq lsp-enable-snippet nil)
+      (setq lsp-prefer-flymake nil)
+      )
+    )
+  )
 
 
 ;; Indentation

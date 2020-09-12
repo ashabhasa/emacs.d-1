@@ -84,10 +84,11 @@
 
 ;; Use easy-mark in place of mark-sexp
 (global-set-key [remap mark-sexp] 'easy-mark)
+(global-set-key [remap counsel-apropos] 'apropos-command)
+
 
 ;; Diable lock files
 (setq create-lockfiles nil)
-
 
 ;; scala configuration
 (require-package 'scala-mode)
@@ -114,9 +115,9 @@
 ;; restrict the smartparens navigation commands
 ;; to just the brackets (ignoring Emacs’ s-expression
 ;; interpretation of the Scala language as provided by scala-mode)
-(defun sp-restrict-c (sym)
-  "Smartparens restriction on `SYM' for C-derived parenthesis."
-  (sp-restrict-to-pairs-interactive "{([" sym))
+;; (defun sp-restrict-c (sym)
+;;   "Smartparens restriction on `SYM' for C-derived parenthesis."
+;;   (sp-restrict-to-pairs-interactive "{([" sym))
 ;; end of scala configuration
 
 
