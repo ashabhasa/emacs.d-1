@@ -9,11 +9,7 @@
     (add-to-list 'exec-path-from-shell-variables var)))
 
 
-(when (or (memq window-system '(mac ns x))
-          (unless (memq system-type '(ms-dos windows-nt))
-            (daemonp)))
-  (setq-default exec-path-from-shell-arguments nil)
+(when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
-
 (provide 'init-exec-path)
 ;;; init-exec-path.el ends here

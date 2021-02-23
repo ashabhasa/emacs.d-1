@@ -3,49 +3,51 @@
 ;;; Code:
 
 (require-package 'haskell-mode)
+(require-package 'use-package)
+(require-package 'which-key)
 
+(use-package lsp-mode
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (haskell-mode . lsp)
+	 (haskell-literate-mode . lsp)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+
+;; optionally
+(use-package lsp-ui :commands lsp-ui-mode)
+;; if you are helm user
+(use-package helm-lsp :commands helm-lsp-workspace-symbol)
+;; if you are ivy user
+(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+
+;; optionally if you want to use debugger
+;;(use-package dap-mode)
+;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+
+;; optional if you want which-key integration
+(use-package which-key
+  :config
+  (which-key-mode))
+
+;; (require-package 'lsp-mode)
+;; (require-package 'lsp-ui)
+;; (require-package 'lsp-haskell)
 ;; Use intero for completion and flycheck
+;; (add-hook 'haskell-mode-hook #'lsp)
+;; (add-hook 'haskell-literate-mode-hook #'lsp)
 
-;; (when (maybe-require-package 'intero)
-;;   (after-load 'haskell-mode
-;;     (intero-global-mode)
-;;     (add-hook 'haskell-mode-hook 'subword-mode)
-;;     (add-hook 'haskell-mode-hook 'eldoc-mode))
-;;   (after-load 'haskell-cabal
-;;     (add-hook 'haskell-cabal-mode 'subword-mode)
-;;     (define-key haskell-cabal-mode-map (kbd "C-c C-l") 'intero-restart))
-;;   (after-load 'intero
-;;     ;; Don't clobber sanityinc/counsel-search-project binding
-;;     (define-key intero-mode-map (kbd "M-?") nil)
-;;     (after-load 'flycheck
-;;       (flycheck-add-next-checker 'intero
-;;                                  '(warning . haskell-hlint)))))
 
-(require-package 'lsp-mode)
-(require-package 'lsp-haskell)
-(require-package 'lsp-ui)
-(when (require 'lsp)
-  (when (require 'lsp-haskell)
-    (when (require 'lsp-ui)
-      (add-hook 'haskell-mode-hook #'lsp)
-      (setq lsp-haskell-process-path-hie "hie-wrapper")
-      (setq lsp-auto-configure 't)
-      (add-hook 'lsp-mode-hook 'lsp-ui-mode)
-      (add-hook 'haskell-mode-hook 'flycheck-mode)
-      (setq lsp-ui-sideline-enable nil)
-      (setq lsp-ui-doc-enable nil)
-      (setq lsp-enable-snippet nil)
-      (setq lsp-prefer-flymake nil)
-      )
-    )
-  )
+(add-auto-mode 'haskell-mode "\\.ghci\\'")
 
-
 ;; Indentation
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
 
-
 ;; Source code helpers
 
 (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
@@ -69,7 +71,6 @@
   (push 'haskell-mode page-break-lines-modes))
 
 
-
 (define-minor-mode stack-exec-path-mode
   "If this is a stack project, set `exec-path' to the path \"stack exec\" would use."
   nil
@@ -93,7 +94,6 @@
 (add-hook 'haskell-mode-hook 'stack-exec-path-mode)
 
 
-
 (when (maybe-require-package 'dhall-mode)
   (add-hook 'dhall-mode-hook 'sanityinc/no-trailing-whitespace)
   (add-hook 'dhall-mode-hook 'stack-exec-path-mode))

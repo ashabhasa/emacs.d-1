@@ -11,10 +11,10 @@
                     :family "PragmataPro"
                     :height 165
                     :weight 'regular)
-(set-face-attribute 'variable-pitch nil
-                    :family "Fira Sans"
-                    :height 165
-                    :weight 'regular)
+;; (set-face-attribute 'variable-pitch nil
+;; :family "Fira Sans"
+;; :height 165
+;; :weight 'regular)
 
 ;; typography
 (setq-default line-spacing nil)
