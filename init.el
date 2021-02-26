@@ -127,6 +127,9 @@
 (require 'init-misc)
 
 (require 'init-folding)
+
+;; coq development
+(require 'init-coq)
 ;; (require 'init-dash)
 
 ;;(require 'init-twitter)
