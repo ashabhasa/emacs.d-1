@@ -19,6 +19,11 @@
 
 ;; optionally
 (use-package lsp-ui :commands lsp-ui-mode)
+(setq lsp-ui-doc-enable nil)
+(setq lsp-headerline-breadcrumb-enable nil)
+(setq lsp-ui-sideline-enable nil)
+(setq lsp-ui-sideline-show-code-actions nil)
+(setq lsp-modeline-code-actions-enable nil)
 ;; if you are helm user
 (use-package helm-lsp :commands helm-lsp-workspace-symbol)
 ;; if you are ivy user
@@ -40,27 +45,6 @@
 ;; Use intero for completion and flycheck
 ;; (add-hook 'haskell-mode-hook #'lsp)
 ;; (add-hook 'haskell-literate-mode-hook #'lsp)
-
-
-(add-auto-mode 'haskell-mode "\\.ghci\\'")
-
-;; Indentation
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-
-
-;; Source code helpers
-
-(add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
-
-(when (maybe-require-package 'hindent)
-  (add-hook 'haskell-mode-hook 'hindent-mode)
-  (after-load 'hindent
-    (when (require 'nadvice)
-      (defun sanityinc/hindent--before-save-wrapper (oldfun &rest args)
-        (with-demoted-errors "Error invoking hindent: %s"
-          (let ((debug-on-error nil))
-            (apply oldfun args))))
-      (advice-add 'hindent--before-save :around 'sanityinc/hindent--before-save-wrapper))))
 
 (after-load 'haskell-mode
   (define-key haskell-mode-map (kbd "C-c h") 'hoogle)
